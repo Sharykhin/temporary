@@ -6,16 +6,17 @@ use Contracts\GenerateFileContract;
 use Contracts\ApiContract;
 
 /**
- * Class LanguageFile
+ * Class AppletXmlLanguageFile
  * @package Support
  */
-class LanguageFile implements GenerateFileContract
+class AppletXmlLanguageFile implements GenerateFileContract
 {
+
     /** @var ApiContract $api */
     private static $api;
 
     /**
-     * LanguageFile constructor.
+     * AppletXmlLanguageFile constructor.
      * @param ApiContract $api
      */
     public function __construct(ApiContract $api)
