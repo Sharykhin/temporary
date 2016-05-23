@@ -2,6 +2,8 @@
 
 namespace Language;
 
+use Contracts\ApiContract;
+
 /**
  * Business logic related to generating language files.
  */
@@ -13,6 +15,18 @@ class LanguageBatchBo
 	 * @var array
 	 */
 	protected static $applications = array();
+
+	/** @var ApiContract  */
+	private $api;
+
+	/**
+	 * LanguageBatchBo constructor.
+	 * @param ApiContract $api
+	 */
+	public function __construct(ApiContract $api)
+	{
+		$this->api = $api;
+	}
 
 	/**
 	 * Starts the language file generation.

@@ -5,6 +5,11 @@
         "phpunit/phpunit": "4.7.*"
     },
     "autoload": {
-        "psr-4": {"Language\\": "src/"}
+        "psr-4": {
+            "Language\\": "src/",
+            "Contracts\\": "contracts/",
+            "Support\\": "support/",
+            "Exceptions\\": "exceptions/"
+        }
     }
 }
