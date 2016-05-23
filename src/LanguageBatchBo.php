@@ -3,6 +3,8 @@
 namespace Language;
 
 use Contracts\ApiContract;
+use Exceptions\ApiException;
+use Exceptions\LanguageFileException;
 
 /**
  * Business logic related to generating language files.
@@ -17,7 +19,7 @@ class LanguageBatchBo
 	protected static $applications = array();
 
 	/** @var ApiContract  */
-	private $api;
+	private static $api;
 
 	/**
 	 * LanguageBatchBo constructor.
@@ -25,7 +27,7 @@ class LanguageBatchBo
 	 */
 	public function __construct(ApiContract $api)
 	{
-		$this->api = $api;
+		self::$api = $api;
 	}
 
 	/**
@@ -64,24 +66,25 @@ class LanguageBatchBo
 	 * @return bool   The success of the operation.
 	 */
 	protected static function getLanguageFile($application, $language)
-	{
+	{		
 		$result = false;
-		$languageResponse = ApiCall::call(
-			'system_api',
-			'language_api',
-			array(
-				'system' => 'LanguageFiles',
-				'action' => 'getLanguageFile'
-			),
-			array('language' => $language)
-		);
 
 		try {
-			self::checkForApiErrorResult($languageResponse);
-		}
-		catch (\Exception $e) {
-			throw new \Exception('Error during getting language file: (' . $application . '/' . $language . ')');
-		}
+			$languageResponse = self::$api->call(
+				'system_api',
+				'language_api',
+				array(
+					'system' => 'LanguageFiles',
+					'action' => 'getLanguageFile'
+				),
+				array('language' => $language)
+			);
+		} catch(ApiException $e) {
+			throw new LanguageFileException(
+				$application,
+				$language,
+				'Error during getting language file: (' . $application . '/' . $language . ')');
+		}		
 
 		// If we got correct data we store it.
 		$destination = self::getLanguageCachePath($application) . $language . '.php';

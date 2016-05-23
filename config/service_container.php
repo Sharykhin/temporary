@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'Contracts\ApiContract' => 'Language\ApiCall'
+    'Contracts\ApiContract' => 'Support\ApiAdapter'
 ];
