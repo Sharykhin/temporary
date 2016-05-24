@@ -2,9 +2,7 @@
 
 namespace Language;
 
-use Contracts\ApiContract;
-
-class ApiCall implements ApiContract
+class ApiCall
 {
 	const GET_LANGUAGE_FILE_RESULT = "<?php
 		return array (

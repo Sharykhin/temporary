@@ -11,5 +11,11 @@
             "Support\\": "support/",
             "Exceptions\\": "exceptions/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": { "Tests\\": "tests/" }
+    },
+    "scripts" : {
+        "test": "./vendor/bin/phpunit tests --bootstrap tests/bootstrap.php --verbose"
     }
 }

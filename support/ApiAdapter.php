@@ -27,7 +27,7 @@ class ApiAdapter implements ApiContract
         self::$apiCall = $apiCall;
     }
 
-    public static function call($target, $mode, $getParameters, $postParameters)
+    public function call($target, $mode, $getParameters, $postParameters)
     {
         $result = self::$apiCall->call($target, $mode, $getParameters, $postParameters);
 

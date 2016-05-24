@@ -52,9 +52,9 @@ class AppletXmlLanguageFile implements GenerateFileContract
             echo " Getting > $appletLanguageId ($appletDirectory) language xmls..\n";
 
             try {
-                $languages = self::getAppletLanguages($appletLanguageId);
+                $languages = $this->getAppletLanguages($appletLanguageId);
             } catch (LanguageException $e) {
-                throw new GenerateFileException($e->getMessage());
+                throw new GenerateFileException($e->getMessage(), $e->getCode(), $e);
             }
 
             if (empty($languages)) {
@@ -65,7 +65,7 @@ class AppletXmlLanguageFile implements GenerateFileContract
             }
             $path = Config::get("system.paths.root") . "/cache/flash";
             foreach ($languages as $language) {
-                $xmlContent = self::getAppletLanguageFile($appletLanguageId, $language);
+                $xmlContent = $this->getAppletLanguageFile($appletLanguageId, $language);
                 $xmlFile    = $path . "/lang_" . $language . ".xml";
                 if (strlen($xmlContent) == self::$fileCreator->writeIntoFile($xmlFile, $xmlContent)) {
                     echo " OK saving " . $xmlFile . " was successful \n";
@@ -89,7 +89,7 @@ class AppletXmlLanguageFile implements GenerateFileContract
      *
      * @return array   The list of the available applet languages.
      */
-    protected static function getAppletLanguages($applet)
+    protected function getAppletLanguages($applet)
     {
         try {
             $result = self::$api->call(
@@ -117,7 +117,7 @@ class AppletXmlLanguageFile implements GenerateFileContract
      *
      * @return string|false   The content of the language file or false if weren't able to get it.
      */
-    protected static function getAppletLanguageFile($applet, $language)
+    protected function getAppletLanguageFile($applet, $language)
     {
         try {
             $result = self::$api->call(

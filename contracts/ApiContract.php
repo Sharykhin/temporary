@@ -8,5 +8,5 @@ namespace Contracts;
  */
 interface ApiContract
 {
-    public static function call($target, $mode, $getParameters, $postParameters);
+    public function call($target, $mode, $getParameters, $postParameters);
 }

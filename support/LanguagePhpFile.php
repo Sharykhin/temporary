@@ -50,9 +50,9 @@ class LanguagePhpFile implements GenerateFileContract
             foreach ($languages as $language) {
                 echo "\t[LANGUAGE: " . $language . "]";
                 try {
-                    $phpContent = self::getLanguageFile($application, $language);
+                    $phpContent = $this->getLanguageFile($application, $language);
                     // If we got correct data we store it.
-                    $destination = self::getLanguageCachePath($application) . $language . '.php';
+                    $destination = $this->getLanguageCachePath($application) . $language . '.php';
                     // If there is no folder yet, we'll create it.
                     var_dump($destination);
                     if (!is_dir(dirname($destination))) {
@@ -76,7 +76,7 @@ class LanguagePhpFile implements GenerateFileContract
      * @param $language
      * @return bool
      */
-    protected static function getLanguageFile($application, $language)
+    protected function getLanguageFile($application, $language)
     {
         $result = false;
 
@@ -107,7 +107,7 @@ class LanguagePhpFile implements GenerateFileContract
      *
      * @return string   The directory of the cached language files.
      */
-    protected static function getLanguageCachePath($application)
+    protected function getLanguageCachePath($application)
     {
         return Config::get('system.paths.root') . '/cache/' . $application. '/';
     }
