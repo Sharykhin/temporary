@@ -2,19 +2,19 @@
 
 namespace Support;
 
-use Contracts\LanguageFactoryContract;
+use Contracts\PhpLanguageFactoryContract;
 
 /**
  * Class LanguageFileFactory
  * @package Support
  */
-class LanguageFileFactory implements LanguageFactoryContract
+class LanguagePhpFileFactory implements PhpLanguageFactoryContract
 {
     /**
      * @return object
      */
     public function create()
     {
-        return DI::create('\Support\LanguageFile');
+        return DI::create('\Support\LanguagePhpFile');
     }
 }

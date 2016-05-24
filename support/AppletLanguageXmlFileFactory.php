@@ -2,13 +2,13 @@
 
 namespace Support;
 
-use Contracts\LanguageFactoryContract;
+use Contracts\XmlLanguageFactoryContract;
 
 /**
  * Class LanguageFileFactory
  * @package Support
  */
-class AppletLanguageXmlFileFactory implements LanguageFactoryContract
+class AppletLanguageXmlFileFactory implements XmlLanguageFactoryContract
 {
     /**
      * @return object
