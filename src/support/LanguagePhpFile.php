@@ -1,13 +1,13 @@
 <?php
 
-namespace Support;
+namespace Language\Support;
 
-use Contracts\GenerateFileContract;
-use Contracts\ApiContract;
-use Contracts\FileCreatorContract;
-use Exceptions\ApiException;
-use Exceptions\LanguageException;
-use Exceptions\GenerateFileException;
+use Language\Contracts\GenerateFileContract;
+use Language\Contracts\ApiContract;
+use Language\Contracts\FileCreatorContract;
+use Language\Exceptions\ApiException;
+use Language\Exceptions\LanguageException;
+use Language\Exceptions\GenerateFileException;
 use Language\Config;
 
 /**

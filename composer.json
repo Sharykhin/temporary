@@ -7,9 +7,9 @@
     "autoload": {
         "psr-4": {
             "Language\\": "src/",
-            "Contracts\\": "contracts/",
-            "Support\\": "support/",
-            "Exceptions\\": "exceptions/"
+            "Language\\Contracts\\": "src/contracts/",
+            "Language\\Support\\": "src/support/",
+            "Language\\Exceptions\\": "src/exceptions/"
         }
     },
     "autoload-dev": {

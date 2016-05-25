@@ -2,27 +2,26 @@
 
 namespace Language;
 
-use Contracts\PhpLanguageFactoryContract;
-use Contracts\XmlLanguageFactoryContract;
-use Exceptions\GenerateFileException;
+use Language\Contracts\LanguageFactoryContract;
+use Language\Exceptions\GenerateFileException;
 
 /**
  * Business logic related to generating language files.
  */
 class LanguageBatchBo
 {
-	/** @var XmlLanguageFactoryContract  */
+	/** @var LanguageFactoryContract  */
 	private static $xmlFactory;
 
-	/** @var PhpLanguageFactoryContract  */
+	/** @var LanguageFactoryContract  */
 	private static $phpFactory;
 
 	/**
 	 * LanguageBatchBo constructor.
-	 * @param PhpLanguageFactoryContract $phpFactory
-	 * @param XmlLanguageFactoryContract $xmlFactory
+	 * @param LanguageFactoryContract $phpFactory
+	 * @param LanguageFactoryContract $xmlFactory
 	 */
-	public function __construct(PhpLanguageFactoryContract $phpFactory, XmlLanguageFactoryContract $xmlFactory)
+	public function __construct(LanguageFactoryContract $phpFactory, LanguageFactoryContract $xmlFactory)
 	{
 		self::$xmlFactory = $xmlFactory;
 		self::$phpFactory = $phpFactory;

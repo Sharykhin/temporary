@@ -1,8 +1,8 @@
 <?php
 
-namespace Exceptions;
+namespace Language\Exceptions;
 
-use Support\Codes;
+use Language\Support\Codes;
 
 /**
  * Class ApiException

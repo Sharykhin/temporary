@@ -1,6 +1,6 @@
 <?php
 
-namespace Support;
+namespace Language\Support;
 
 /**
  * Class Codes

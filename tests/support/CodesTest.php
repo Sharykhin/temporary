@@ -1,15 +1,18 @@
 <?php
 
-use Support\Codes;
+use Language\Support\Codes;
 
+/**
+ * Class CodesTest
+ */
 class CodesTest extends \PHPUnit_Framework_TestCase
 {
     public function testCodes()
     {
-        $this->assertEquals(Codes::API_EXCEPTION, 0);
-        $this->assertEquals(Codes::API_WRONG_RESPONSE, 1);
-        $this->assertEquals(Codes::API_WRONG_CONTENT, 2);
-        $this->assertEquals(Codes::LANGUAGE_ERROR, 3);
-        $this->assertEquals(Codes::GENERATE_FILE_ERROR, 4);
+        $this->assertEquals(0, Codes::API_EXCEPTION);
+        $this->assertEquals(1, Codes::API_WRONG_RESPONSE);
+        $this->assertEquals(2, Codes::API_WRONG_CONTENT);
+        $this->assertEquals(3, Codes::LANGUAGE_ERROR);
+        $this->assertEquals(4, Codes::GENERATE_FILE_ERROR);
     }
 }

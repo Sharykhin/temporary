@@ -1,8 +1,8 @@
 <?php
 
-namespace Exceptions;
+namespace Language\Exceptions;
 
-use Support\Codes;
+use Language\Support\Codes;
 
 /**
  * Class ApiWrongResponseException
@@ -17,8 +17,8 @@ class ApiWrongResponseException extends ApiException
      * ApiWrongResponseException constructor.
      * @param string $status
      * @param int $message
-     * @param \Exception $code
-     * @param \Exception $previous
+     * @param \Exception|int $code
+     * @param \Exception|null $previous
      */
     public function __construct($status, $message, $code = Codes::API_WRONG_RESPONSE, \Exception $previous = null)
     {

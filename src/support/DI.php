@@ -1,8 +1,8 @@
 <?php
 
-namespace Support;
+namespace Language\Support;
 
-use Exceptions\InterfaceNotBoundableException;
+use Language\Exceptions\InterfaceNotBoundableException;
 
 /**
  * Class DI

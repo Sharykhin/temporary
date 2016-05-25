@@ -1,14 +1,14 @@
 <?php
 
-namespace Support;
+namespace Language\Support;
 
-use Contracts\PhpLanguageFactoryContract;
+use Language\Contracts\LanguageFactoryContract;
 
 /**
  * Class LanguageFileFactory
  * @package Support
  */
-class LanguagePhpFileFactory implements PhpLanguageFactoryContract
+class LanguagePhpFileFactory implements LanguageFactoryContract
 {
     /**
      * @return object

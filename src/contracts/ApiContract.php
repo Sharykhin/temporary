@@ -1,6 +1,6 @@
 <?php
 
-namespace Contracts;
+namespace Language\Contracts;
 
 /**
  * Interface ApiContract

@@ -1,12 +1,12 @@
 <?php
 
-namespace Support;
+namespace Language\Support;
 
-use Contracts\ApiContract;
+use Language\Contracts\ApiContract;
 use Language\ApiCall;
-use Exceptions\ApiException;
-use Exceptions\ApiWrongContentException;
-use Exceptions\ApiWrongResponseException;
+use Language\Exceptions\ApiException;
+use Language\Exceptions\ApiWrongContentException;
+use Language\Exceptions\ApiWrongResponseException;
 
 /**
  * It's not a real adapter, I think some sort of wrapper,
@@ -15,7 +15,8 @@ use Exceptions\ApiWrongResponseException;
  */
 class ApiAdapter implements ApiContract
 {
-    private static $apiCall;
+    /** @var ApiCall  */
+    private $apiCall;
 
     /**
      * ApiAdapter constructor.
@@ -24,12 +25,12 @@ class ApiAdapter implements ApiContract
      */
     public function __construct(ApiCall $apiCall)
     {
-        self::$apiCall = $apiCall;
+        $this->apiCall = $apiCall;
     }
 
     public function call($target, $mode, $getParameters, $postParameters)
     {
-        $result = self::$apiCall->call($target, $mode, $getParameters, $postParameters);
+        $result = $this->apiCall->call($target, $mode, $getParameters, $postParameters);
 
         // Error during the api call.
         if ($result === false || !isset($result['status'])) {
