@@ -2,10 +2,10 @@
 
 namespace Tests;
 
-use Contracts\XmlLanguageFactoryContract;
-use Support\AppletXmlLanguageFile;
+use Language\Contracts\LanguageFactoryContract;
+use Language\Support\AppletXmlLanguageFile;
 
-class FakeAppletLanguageXmlFileFactory implements XmlLanguageFactoryContract
+class FakeAppletLanguageXmlFileFactory implements LanguageFactoryContract
 {
     public function create()
     {

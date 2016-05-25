@@ -4,13 +4,13 @@ namespace Tests;
 
 use Tests\FakeApiCall;
 use Tests\FakeFileCreator;
-use Support\AppletXmlLanguageFile;
-use Exceptions\GenerateFileException;
+use Language\Support\AppletXmlLanguageFile;
+use Language\Exceptions\GenerateFileException;
 
 class AppletXmlLanguageFileTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException     \Exceptions\GenerateFileException
+     * @expectedException     \Language\Exceptions\GenerateFileException
      * @expectedExceptionCode 4
      */
     public function testGenerateFileException()

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\src\support;
+
 use Language\Support\Codes;
 
 /**

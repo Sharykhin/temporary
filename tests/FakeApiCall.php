@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Contracts\ApiContract;
+use Language\Contracts\ApiContract;
 
 class FakeApiCall implements ApiContract
 {

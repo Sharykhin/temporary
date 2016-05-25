@@ -2,11 +2,11 @@
 
 namespace Tests;
 
-use Contracts\PhpLanguageFactoryContract;
-use Support\LanguagePhpFile;
+use Language\Contracts\LanguageFactoryContract;
+use Language\Support\LanguagePhpFile;
 
 
-class FakeLanguagePhpFileFactory implements PhpLanguageFactoryContract
+class FakeLanguagePhpFileFactory implements LanguageFactoryContract
 {
     public function create()
     {

@@ -8,5 +8,5 @@ $languageBatchBo = new Language\LanguageBatchBo(
     Language\Support\DI::create('Language\Support\LanguagePhpFileFactory'),
     Language\Support\DI::create('Language\Support\AppletLanguageXmlFileFactory')
 );
-$languageBatchBo->generateLanguageFiles();
+//$languageBatchBo->generateLanguageFiles();
 $languageBatchBo->generateAppletLanguageXmlFiles();

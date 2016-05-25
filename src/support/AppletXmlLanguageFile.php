@@ -8,7 +8,8 @@ use Language\Contracts\FileCreatorContract;
 use Language\Exceptions\LanguageException;
 use Language\Exceptions\ApiException;
 use Language\Exceptions\GenerateFileException;
-use Language\Config;
+use Language\Contracts\OutPutContract;
+use Language\Contracts\ConfigContract;
 
 
 /**
@@ -17,39 +18,55 @@ use Language\Config;
  */
 class AppletXmlLanguageFile implements GenerateFileContract
 {
-
-    /** @var ApiContract $api */
-    private static $api;
-
-    /** @var FileCreatorContract  */
-    private static $fileCreator;
-
+    use DirectoryTrait;
     /**
      * Contains the applications which ones require translations.
      *
      * @var array
      */
-    protected static $applets = array(
+    protected $applets = array(
         "memberapplet" => "JSM2_MemberApplet",
     );
 
+    /** @var ApiContract $api */
+    private $api;
+
+    /** @var FileCreatorContract $fileCreator */
+    private $fileCreator;
+
+    /** @var OutPutContract $outPutService */
+
+    private $outPutService;
+
+    /** @var ConfigContract $config */
+    private $config;
+
     /**
-     * AppletXmlLanguageFile constructor.
+     * LanguagePhpFile constructor.
      * @param ApiContract $api
      * @param FileCreatorContract $fileCreator
+     * @param OutPutContract $outPutService
+     * @param ConfigContract $config
      */
-    public function __construct(ApiContract $api, FileCreatorContract $fileCreator)
+    public function __construct(
+        ApiContract $api,
+        FileCreatorContract $fileCreator,
+        OutPutContract $outPutService,
+        ConfigContract $config
+    )
     {
-        self::$api = $api;
-        self::$fileCreator = $fileCreator;
+        $this->api = $api;
+        $this->fileCreator = $fileCreator;
+        $this->outPutService = $outPutService;
+        $this->config = $config;
     }
 
     public function generateFile()
     {
-        echo "\nGetting applet language XMLs..\n";
+        $this->outPutService->printText("\nGetting applet language XMLs..\n");
 
-        foreach (self::$applets as $appletDirectory => $appletLanguageId) {
-            echo " Getting > $appletLanguageId ($appletDirectory) language xmls..\n";
+        foreach ($this->applets as $appletDirectory => $appletLanguageId) {
+            $this->outPutService->printText(" Getting > $appletLanguageId ($appletDirectory) language xmls..\n");
 
             try {
                 $languages = $this->getAppletLanguages($appletLanguageId);
@@ -61,14 +78,15 @@ class AppletXmlLanguageFile implements GenerateFileContract
                 throw new GenerateFileException("There is no available languages for the " . $appletLanguageId . " applet.");
             }
             else {
-                echo " - Available languages: " . implode(", ", $languages) . "\n";
+                $this->outPutService->printText(" - Available languages: " . implode(", ", $languages) . "\n");
             }
-            $path = Config::get("system.paths.root") . "/cache/flash";
+            $path = $this->getLanguageCachePath();
+            $this->createDir($path);
             foreach ($languages as $language) {
                 $xmlContent = $this->getAppletLanguageFile($appletLanguageId, $language);
                 $xmlFile    = $path . "/lang_" . $language . ".xml";
-                if (strlen($xmlContent) == self::$fileCreator->writeIntoFile($xmlFile, $xmlContent)) {
-                    echo " OK saving " . $xmlFile . " was successful \n";
+                if (strlen($xmlContent) == $this->fileCreator->writeIntoFile($xmlFile, $xmlContent)) {
+                    $this->outPutService->printText(" OK saving " . $xmlFile . " was successful \n");
                 }
                 else {
                     throw new GenerateFileException("Unable to save applet: ("
@@ -76,11 +94,12 @@ class AppletXmlLanguageFile implements GenerateFileContract
                         . ") xml (" . $xmlFile . ")!");
                 }
             }
-            echo " < $appletLanguageId ($appletDirectory) language xml cached.\n";
+            $this->outPutService->printText(" < $appletLanguageId ($appletDirectory) language xml cached.\n");
         }
 
-        echo "\nApplet language XMLs generated.\n";
+        $this->outPutService->printText("\nApplet language XMLs generated.\n");
     }
+
 
     /**
      * Gets the available languages for the given applet.
@@ -92,7 +111,7 @@ class AppletXmlLanguageFile implements GenerateFileContract
     protected function getAppletLanguages($applet)
     {
         try {
-            $result = self::$api->call(
+            $result = $this->api->call(
                 'system_api',
                 'language_api',
                 array(
@@ -120,7 +139,7 @@ class AppletXmlLanguageFile implements GenerateFileContract
     protected function getAppletLanguageFile($applet, $language)
     {
         try {
-            $result = self::$api->call(
+            $result = $this->api->call(
                 'system_api',
                 'language_api',
                 array(
@@ -138,5 +157,10 @@ class AppletXmlLanguageFile implements GenerateFileContract
         }
 
         return $result['data'];
+    }
+
+    protected function getLanguageCachePath()
+    {
+        return $this->config->get("system.paths.root") . "/cache/flash";
     }
 }

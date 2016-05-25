@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Contracts\FileCreatorContract;
+use Language\Contracts\FileCreatorContract;
 
 class FakeFileCreator implements FileCreatorContract
 {

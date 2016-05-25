@@ -1,7 +1,13 @@
 <?php
 
-use Support\FileCreator;
+namespace Tests\src\support;
 
+use Language\Support\FileCreator;
+
+/**
+ * Class FileCreatorTest
+ * @package Tests\src\support
+ */
 class FileCreatorTest extends \PHPUnit_Framework_TestCase
 {
     protected $tmpFile = "file.tmp";

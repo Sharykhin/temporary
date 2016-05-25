@@ -8,7 +8,8 @@ use Language\Contracts\FileCreatorContract;
 use Language\Exceptions\ApiException;
 use Language\Exceptions\LanguageException;
 use Language\Exceptions\GenerateFileException;
-use Language\Config;
+use Language\Contracts\OutPutContract;
+use Language\Contracts\ConfigContract;
 
 /**
  * Class LanguageFile
@@ -16,53 +17,69 @@ use Language\Config;
  */
 class LanguagePhpFile implements GenerateFileContract
 {
+    use DirectoryTrait;
+    
     /**
      * Contains the applications which ones require translations.
      *
      * @var array
      */
-    protected static $applications = array();
+    protected $applications = array();
 
     /** @var ApiContract $api */
-    private static $api;
+    private $api;
     
-    /** @var FileCreatorContract  */
-    private static $fileCreator;
+    /** @var FileCreatorContract $fileCreator */
+    private $fileCreator;
+
+    /** @var OutPutContract $outPutService */
+
+    private $outPutService;
+
+    /** @var ConfigContract $config */
+    private $config;
 
     /**
-     * LanguageFile constructor.
+     * LanguagePhpFile constructor.
      * @param ApiContract $api
+     * @param FileCreatorContract $fileCreator
+     * @param OutPutContract $outPutService
+     * @param ConfigContract $config
      */
-    public function __construct(ApiContract $api, FileCreatorContract $fileCreator)
+    public function __construct(
+        ApiContract $api,
+        FileCreatorContract $fileCreator,
+        OutPutContract $outPutService,
+        ConfigContract $config
+    )
     {
-        self::$api = $api;
-        self::$fileCreator = $fileCreator;
+        $this->api = $api;
+        $this->fileCreator = $fileCreator;
+        $this->outPutService = $outPutService;
+        $this->config = $config;
     }
+
 
     public function generateFile()
     {
         // The applications where we need to translate.
-        self::$applications = Config::get('system.translated_applications');
-
-        echo "\nGenerating language files\n";
-        foreach (self::$applications as $application => $languages) {
-            echo "[APPLICATION: " . $application . "]\n";
+        $this->applications = $this->config->get('system.translated_applications');
+        $this->outPutService->printText("\nGenerating language files\n");
+        foreach ($this->applications as $application => $languages) {
+            $this->outPutService->printText("[APPLICATION: " . $application . "]\n");
             foreach ($languages as $language) {
-                echo "\t[LANGUAGE: " . $language . "]";
+                $this->outPutService->printText("\t[LANGUAGE: " . $language . "]");
                 try {
                     $phpContent = $this->getLanguageFile($application, $language);
                     // If we got correct data we store it.
                     $destination = $this->getLanguageCachePath($application) . $language . '.php';
-                    // If there is no folder yet, we'll create it.
-                    var_dump($destination);
-                    if (!is_dir(dirname($destination))) {
-                        mkdir(dirname($destination), 0755, true);
-                    }
+
+                    $this->createDir($destination);
                     
-                    $result = (bool) self::$fileCreator->writeIntoFile($destination, $phpContent);
+                    $result = (bool) $this->fileCreator->writeIntoFile($destination, $phpContent);
                     
                     if ($result) {
-                        echo " OK\n";
+                        $this->outPutService->printText(" OK\n");
                     }
                 } catch (LanguageException $e) {
                     throw new GenerateFileException('Unable to generate language file!', $e->getCode(), $e);
@@ -78,10 +95,8 @@ class LanguagePhpFile implements GenerateFileContract
      */
     protected function getLanguageFile($application, $language)
     {
-        $result = false;
-
         try {
-            $languageResponse = self::$api->call(
+            $result = $this->api->call(
                 'system_api',
                 'language_api',
                 array(
@@ -96,7 +111,7 @@ class LanguagePhpFile implements GenerateFileContract
                 $e->getCode(),
                 $e);
         }
-
+        
         return $result['data'];        
     }
 
@@ -109,6 +124,6 @@ class LanguagePhpFile implements GenerateFileContract
      */
     protected function getLanguageCachePath($application)
     {
-        return Config::get('system.paths.root') . '/cache/' . $application. '/';
+        return $this->config->get('system.paths.root') . '/cache/' . $application. '/';
     }
 }
