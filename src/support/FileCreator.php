@@ -1,8 +1,8 @@
 <?php
 
-namespace Support;
+namespace Language\Support;
 
-use Contracts\FileCreatorContract;
+use Language\Contracts\FileCreatorContract;
 
 /**
  * Class FileCreator

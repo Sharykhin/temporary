@@ -15,6 +15,6 @@ class LanguagePhpFileFactory implements LanguageFactoryContract
      */
     public function create()
     {
-        return DI::create('\Support\LanguagePhpFile');
+        return DI::create('\Language\Support\LanguagePhpFile');
     }
 }

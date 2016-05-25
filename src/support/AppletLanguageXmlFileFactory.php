@@ -15,6 +15,6 @@ class AppletLanguageXmlFileFactory implements LanguageFactoryContract
      */
     public function create()
     {
-        return DI::create('\Support\AppletXmlLanguageFile');
+        return DI::create('\Language\Support\AppletXmlLanguageFile');
     }
 }
